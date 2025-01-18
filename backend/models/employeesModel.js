@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { hashPassword, verifyPassword } from "../utils/hashPassword.js"; // Import hashPassword utility
 const EmployeeSchema = new mongoose.Schema({
   employee_id: {type:String,required:true,unique:true},
   name: {
@@ -13,6 +14,11 @@ const EmployeeSchema = new mongoose.Schema({
     lowercase: true,
     trim: true,
     match: [/^\S+@\S+\.\S+$/, 'Please provide a valid email address'],
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 6,
   },
   designation: {
     type: String,
@@ -36,7 +42,25 @@ const EmployeeSchema = new mongoose.Schema({
 },
 {
   timestamps: true, 
-});
+  });
+  EmployeeSchema.pre("save", async function (next) {
+    if (!this.isModified("password")) return next();
+    try {
+      this.password = await hashPassword(this.password);
+      next();
+    } catch (error) {
+      next(error);
+    }
+  });
+  
+  EmployeeSchema.methods.comparePassword = async function (password) {
+    try {
+      return await verifyPassword(this.password, password);
+    } catch (error) {
+      throw new Error("Error comparing password");
+    }
+  };
+  
 const Employee = mongoose.model("Employee", EmployeeSchema);
 
 export default Employee;

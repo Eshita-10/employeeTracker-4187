@@ -1,4 +1,5 @@
 import Task from "../models/tasksModels.js";
+import Employee from "../models/employeesModel.js";
 export const createTask = async (req, res) => {
   try {
     const {task_id,title,description,priority,assignedBy,category,completed} = req.body;
@@ -89,5 +90,37 @@ export const completedTask = async (req, res) => {
   }
   // res.send("completed Tasks cotroller")
 };
+export const taskAssignedToEmployee= async (req, res) => {
+  try {
+    const tasks = await Task.find().populate('assignedTo').exec();
+    if (tasks.length === 0) {
+      return res.status(404).json({ message: "No tasks found" });
+    }
+    return res.json(tasks);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+}
+export const assignTask = async (req, res) => {
+  const { task_id, employee_id } = req.body;
 
+  try {
+    const task = await Task.findOne({ task_id });
+    if (!task) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+    const employee = await Employee.findOne({ employee_id });
+    if (!employee) {
+      return res.status(404).json({ message: "Employee not found" });
+    }
 
+    task.assignedTo = employee._id; 
+    await task.save(); 
+
+    res.json({ message: "Task successfully assigned", task });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+}
