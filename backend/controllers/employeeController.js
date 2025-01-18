@@ -84,3 +84,16 @@ export const deleteEmployeeById = async (req, res) => {
     return res.status(500).json({ success: false, error: error.message });
   }
 };
+export const search= async (req, res) => {
+  const { name, email, designation } = req.query;
+  const filter = {};
+  if (name) filter.name = new RegExp(name, 'i')
+  if (email) filter.email = new RegExp(email, 'i');
+  if (designation) filter.designation = new RegExp(designation, 'i');
+  try {
+    const employees = await Employee.find(filter);
+    res.status(200).json(employees);
+  } catch (err) {
+    res.status(500).json({ message: 'Internal Server Error', error: err.message });
+  }
+}
