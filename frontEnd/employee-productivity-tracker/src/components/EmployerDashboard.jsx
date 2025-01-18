@@ -1,5 +1,6 @@
 import React from "react";
 import { PieChart, Pie, Tooltip, Cell } from "recharts";
+import Leaderboard from "./Leaderboard";
 
 const data = [
   { name: "BAU", value: 40 },
@@ -20,6 +21,7 @@ const EmployerDashboard = () => {
         </Pie>
         <Tooltip />
       </PieChart>
+      <Leaderboard />
     </div>
   );
 };
