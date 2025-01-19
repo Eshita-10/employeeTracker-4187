@@ -1,8 +1,11 @@
-
 import express from "express";
-import { getProductivityInsights, getTeamPerformanceTrends, generateReport } from "../controllers/dashboardController.js";
-const router = express.Router();
-router.get("/productivity-insights", getProductivityInsights);
-router.get("/team-performance-trends", getTeamPerformanceTrends);
-router.get("/generate-report", generateReport);
-export default router;
+import {
+  getProductivityInsights,
+  getTeamPerformanceTrends,
+  generateReport,
+} from "../controllers/dashboardController.js";
+const dashboardRoute = express.Router();
+dashboardRoute.get("/productivity-insights", getProductivityInsights);
+dashboardRoute.get("/team-performance-trends", getTeamPerformanceTrends);
+dashboardRoute.get("/generate-report", generateReport);
+export default dashboardRoute;
