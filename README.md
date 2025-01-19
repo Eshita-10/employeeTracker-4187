@@ -26,7 +26,7 @@ React: Frontend library for building the user interface. Vite: Fast build tool a
 
 Setup Instructions
 Clone the repository:
-git clone https://github.com/your-username/employee-productivity-tracker-frontend.git cd employee-productivity-tracker-frontend Install dependencies:
+git clone https://github.com/Eshita-10/employeeTracker-4187/tree/main/frontEnd/employee-productivity-tracker cd employee-productivity-tracker-frontend Install dependencies:
 
 npm install
 
