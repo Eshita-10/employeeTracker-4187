@@ -13,7 +13,6 @@ config()
 const db = process.env.dbURL
 const PORT = process.env.PORT
 connectToDb(db)
-
 app.use(helmet());
 app.use(cors());
 app.use(express.json())
