@@ -7,6 +7,7 @@ import { config } from "dotenv"
 import employeeRouter from "./routes/employeeRoute.js"
 import taskRouter from "./routes/tasksRoute.js"
 import authRoute from "./routes/authRoute.js"
+import dashboardRoutes from "./routes/dashboardRoutes.js";
 const app = express()
 config()
 const db = process.env.dbURL
@@ -19,6 +20,7 @@ app.use(express.json())
 app.use("/auth", authRoute)
 app.use("/employees", employeeRouter)
 app.use('/task',taskRouter)
+app.use("/dashboard", dashboardRoutes);
 app.listen(PORT, () => {
   console.log(`server is listening on port ${PORT}`)
 })
